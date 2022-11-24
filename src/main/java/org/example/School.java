@@ -5,36 +5,21 @@ import java.util.List;
 public class School {
 
     private String name;
-    private int teacherNum;
-    private int courseNum;
-    private int studentNum;
     private List<Course> courses;
     private List<Teacher> teachers;
     private List<Student> students;
 
-    public School(String name, int teacherNum, int courseNum, int studentNum) {
+    public School(String name, List<Course> courses, List<Teacher> teachers, List<Student> students) {
         setName(name);
-        setTeacherNum(teacherNum);
-        setCourseNum(courseNum);
-        setStudentNum(studentNum);
+        setCourseList(courses);
+        setTeacherList(teachers);
+        setStudentList(students);
     }
 
     //Setters
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setTeacherNum(int teacherNum) {
-        this.teacherNum = teacherNum;
-    }
-
-    public void setCourseNum(int courseNum) {
-        this.courseNum = courseNum;
-    }
-
-    public void setStudentNum(int studentNum) {
-        this.studentNum = studentNum;
     }
 
     public void setCourseList(List<Course> courses) {
@@ -55,18 +40,6 @@ public class School {
         return name;
     }
 
-    public int getTeacherNum() {
-        return teacherNum;
-    }
-
-    public int getCourseNum() {
-        return courseNum;
-    }
-
-    public int getStudentNum() {
-        return studentNum;
-    }
-
     public List<Course> getCourseList() {
         return courses;
     }
@@ -82,27 +55,34 @@ public class School {
     public void enroll(String studentId, String courseId) {
         Student student;
         Course course;
+        //tenemos que ir a lo largo de la lista de estudiantes de la escuela para encontrar el estudiante y una vez encontrado hacemos lo mismo para buscar el curso dentro de la lista de cursos
         for (Student s : students) {
-            System.out.println(s);
+            System.out.println("he entrado en el for para buscar al estudiante");
+            System.out.println(s.getStudentId());
+            System.out.println(studentId);
             if (s.getStudentId().equals(studentId)) {
-                //System.out.println("entro aqui");
+                System.out.println("he encontrado al estudiante y es");
                 student = s;
-                //System.out.println(student);
+                System.out.println(student);
                 for (Course c : courses) {
-                   // System.out.println(c);
+                    System.out.println("he entrado en el for para buscar el curso");
+                   System.out.println(c);
                     if (c.getCourseId().equals(courseId)) {
-                        //System.out.println("he encontrado un course");
+                        System.out.println("he encontrado un course y es est");
                         course = c;
-                        //System.out.println(c);
+                        System.out.println(c);
                         course.getStudentList().add(student);
-                        //System.out.println(course.getStudentList());
+                        System.out.println("he añadido un estudiante a la lista de estudiantes del curso");
+                        System.out.println(course.getStudentList());
                         course.setMoneyEarned(course.getMoneyEarned() + course.getPrice());
                         System.out.println("This is the list of students enrolled in that course so far:");
                         System.out.println(course.getStudentList().toString());
-                    } else System.err.println("There's no course with that name!!");
+                    } 
+                    else System.err.println("There's no course with that id!!");
                 }
-            } else {
-                System.err.println("There's no student with that name!!");
+            } 
+            else {
+                System.err.println("There's no student with that id!!");
 
             }
         }
@@ -128,79 +108,82 @@ public class School {
         }
     }
 
-    public void showCourses() {
-        for (Course c : courses) {
-            System.out.println(c.toString());
-        }
+    public List<Course> showCourses() {
+        return courses;
     }
 
-    public void lookUpCourse(String courseId) {
+    public Course lookUpCourse(String courseId) {
         for (Course c : courses) {
             if (c.getCourseId().equals(courseId))
-                System.out.println(c);
+                return c;
         }
+        return null;
     }
 
-    public void showStudents() {
-        for (Student s : students) {
-            System.out.println(s.toString());
-        }
+    public List<Student> showStudents() {
+        return students;
     }
 
-    public void lookUpStudent(String studentId) {
+    public Student lookUpStudent(String studentId) {
         for (Student s : students) {
             if (s.getStudentId().equals(studentId))
-                System.out.println(s);
+                return s;
         }
+        return null;
     }
 
-    public void showTeachers() {
-        for (Teacher t : teachers) {
-            System.out.println(t);
-        }
+    public List<Teacher> showTeachers() {
+        return teachers;
     }
 
-    public void lookUpTeacher(String teacherId) {
+    public Teacher lookUpTeacher(String teacherId) {
         for (Teacher t : teachers) {
             if (t.getTeacherId().equals(teacherId))
-                System.out.println(t);
+                return t;
         }
+        return null;
     }
 
-    public void showProfit() {
+    public double showProfit() {
         double courseProfit = 0;
         double total = 0;
         for (Course c : courses) {
             if(c.getTeacher() != null && c.getStudentList().isEmpty() == false){
             courseProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
-            total += courseProfit;}
-            else System.out.println("You need to set students and teachers to the course to find the profit");
+            total += courseProfit;
+            }
+            /*else System.out.println("You need to set students and teachers to the course to find the profit");*/
         }
-        System.out.println(total + "euro");
+        return total;
+        //System.out.println(total + "euro");
     }
 
     //EXTRAS
-    public void showStudents(String courseId) {
+    public List<Student> showStudents(String courseId) {
         for (Course c : courses) {
             if (c.getCourseId().equals(courseId)) {
-                System.out.println(c.getStudentList());
-            } else System.err.println("There's no course with that id!!");
+                return c.getStudentList();
+            } //else System.err.println("There's no course with that id!!");
         }
+        return null;
     }
 
-    public void showMoneyEarned() {
+    public double showMoneyEarned() {
         double total = 0;
         for (Course c : courses) {
             total += c.getMoneyEarned();
         }
-        System.out.println(total + "euro");
+        //System.out.println(total + "euro");
+        return total;
     }
 
-    public void showMoneySpent() {
+    public double showMoneySpent() {
         double total = 0;
         for (Course c : courses) {
             total += c.getTeacher().getSalary();
         }
-        System.out.println(total + "euro");
+        //System.out.println(total + "euro");
+        return total;
     }
+    
 }

@@ -9,16 +9,39 @@ public class Teacher {
     private double salary;
 
     public Teacher(String name, double salary) {
-        //Generating random
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        this.teacherId = new String(array, Charset.forName("UTF-8"));
+       this.teacherId = setRandomId();
         setName(name);
         setSalary(salary);
     }
-    
+
+    public String setRandomId(){
+        //Generating random
+
+        int n = 5;
+
+        // length is bounded by 256 Character
+        byte[] array = new byte[256];
+        new Random().nextBytes(array);
+
+        String randomString = new String(array, Charset.forName("UTF-8"));
+
+        // Create a StringBuffer to store the result
+        StringBuffer r = new StringBuffer();
+
+        // Append first 20 alphanumeric characters
+        // from the generated random String into the result
+        for (int k = 0; k < randomString.length(); k++) {
+            char ch = randomString.charAt(k);
+            if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) && (n > 0)) {
+                r.append(ch);
+                n--;
+            }
+        }
+        return r.toString();
+    }
+
     //Setters
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -26,9 +49,9 @@ public class Teacher {
     public void setSalary(double salary) {
         this.salary = salary;
     }
-    
+
     //Getter
-    
+
     public String getTeacherId() {
         return teacherId;
     }

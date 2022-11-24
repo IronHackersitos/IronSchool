@@ -67,10 +67,7 @@ public class Main {
         }
 
         System.out.println("Creating your school ...");
-        School school = new School(name, teacherNum, coursesNum, studentNum);
-        school.setStudentList(students);
-        school.setTeacherList(teachers);
-        school.setCourseList(courses);
+        School school = new School(name, courses, teachers, students);
         
         System.out.println("What do you want to do now?");
         boolean isRunning = true;
@@ -92,73 +89,62 @@ public class Main {
                     String studentId = saveString(input);
                     System.out.println("To which course do you want to assign him/her?");
                     String courseId = saveString(input);
-                    //enroll(studentId, courseId, students, courses);
-                    /*if(school.enroll(studentId, courseId) == -1){
-                        break;}
-                    break;*/
                     school.enroll(studentId, courseId);
+                    break;
                 case 2:
                     System.out.println("Which teacher do you want to assign?");
                     String teacherId = saveString(input);
                     System.out.println("To which course do you want to assign him/her?");
                     String courseId2 = saveString(input);
-                    //assign(teacherId, courseId, teachers, courses);
                     school.assign(teacherId, courseId2);
                     break;
                 case 3:
                     System.out.println("Here's a list with all the school's available courses");
-                    //showCourses(courses);
-                    school.showCourses();
+                    System.out.println(school.showCourses().toString());
                     break;
                 case 4:
                     System.out.println("Enter id of course you want to look up:");
                     String courseId3 = saveString(input);
                     System.out.println("Showing course details:");
-                    //lookUpCourse(courseId);
-                    school.lookUpCourse(courseId3);
+                    System.out.println(school.lookUpCourse(courseId3).toString());
                     break;
                 case 5:
                     System.out.println("Here's a list with all the school's students");
-                    //showStudents(students);
-                    school.showStudents();
+                    System.out.println(school.showStudents().toString());
                     break;
                 case 6:
                     System.out.println("Enter id of student you want to look up:");
                     String studentId1 = saveString(input);
                     System.out.println("Showing student details:");
-                    //lookUpStudent(studentId);
-                    school.lookUpStudent(studentId1);
+                    System.out.println(school.lookUpStudent(studentId1).toString());
                     break;
                 case 7:
                     System.out.println("Here's a list with all the school's teachers");
-                    //showTeachers(teachers);
-                    school.showTeachers();
+                    System.out.println(school.showTeachers().toString());
                     break;
                 case 8:
                     System.out.println("Enter id of teacher you want to look up:");
                     String teacherId1 = saveString(input);
                     System.out.println("Showing teacher details");
-                    //lookUpTeacher(teacherId);
-                    school.lookUpTeacher(teacherId1);
+                    System.out.println(school.lookUpTeacher(teacherId1).toString());
                     break;
                 case 9:
                     System.out.println("Here's the amount of school's profits:");
-                    //showProfit(school);
-                    school.showProfit();
+                    System.out.println(school.showProfit());
                     break;
                 case 10:
                     System.out.println("Enter id of course whose students you want to see:");
                     String courseId4 = saveString(input);
                     System.out.println("Showing course students:");
-                    school.showStudents(courseId4);
+                    System.out.println(school.showStudents(courseId4).toString());
                     break;
                 case 11:
                     System.out.println("Here's the amount of school's money earned:");
-                    school.showMoneyEarned();
+                    System.out.println(school.showMoneyEarned());
                     break;
                 case 12:
                     System.out.println("Here's the amount of school's money earned:");
-                    school.showMoneySpent();
+                    System.out.println(school.showMoneySpent());
                     break;
                 case 13:
                     System.out.println("C ya!!!");
@@ -231,105 +217,4 @@ public class Main {
         }
         return num;
     }
-    
-    //ENROLL STUDENT
-    /*public static void enroll(String studentId, String  courseId, List<Student> students, List<Course> courses){
-        Student student;
-        Course course;
-        for(Student s : students){
-            if(s.getStudentId().equals(studentId)){
-                student = s;
-                for(Course c : courses){
-                    if(c.getCourseId().equals(courseId)){
-                        course = c;
-                        course.getStudentList().add(student);
-                        course.setMoneyEarned(course.getMoneyEarned() + course.getPrice());
-                        System.out.println("This is the list of students enrolled in that course so far:");
-                        System.out.println(course.getStudentList().toString());
-                    }
-                    else return;
-                }
-            }
-            else return;
-        }
-   
-    }*/
-    
-    //ASSIGN TEACHER
-   /* public static void assign(String teacherId, String  courseId, List<Teacher> teachers, List<Course> courses){
-
-        Teacher teacher;
-        Course course;
-        for(Teacher t : teachers){
-            if(t.getTeacherId().equals(teacherId)){
-                teacher = t;
-                for(Course c : courses){
-                    if(c.getCourseId().equals(courseId)){
-                        course = c;
-                        course.setTeacher(teacher);
-                        System.out.println(course.getTeacher() + " has been added to this course: " + course.getName());
-                    }
-                    else return;
-                }
-            }
-            else return;
-        }
-    }*/
-    
-    //SHOW COURSES
-    /*public static void showCourses(List<Course> courses){
-        for(Course c : courses){
-            System.out.println(c);
-        }
-    }*/
-    
-    //LOOK UP COURSE
-    /*public static void lookUpCourse(String courseId, List<Course> courses){
-        for(Course c : courses){
-            if (c.getCourseId().equals(courseId))
-                System.out.println(c);
-        }
-    }*/
-
-    //SHOW STUDENTS
-    /*public static void showStudents(List<Student> students){
-        for(Student s : students){
-            System.out.println(s);
-        }
-    }*/
-
-    //LOOK UP STUDENT
-    /*public static void lookUpStudent(String studentId, List<Student> students){
-        for(Student s : students){
-            if (s.getStudentId().equals(studentId))
-                System.out.println(s);
-        }
-    }*/
-    
-    //SHOW TEACHERS
-    /*public static void showTeachers(List<Teacher> teachers){
-        for(Teacher t : teachers){
-            System.out.println(t);
-        }
-    }*/
-    
-    //LOOK UP TEACHER
-    /*public static void lookUpTeacher(String teacherId, List<Teacher> teachers){
-        for(Teacher t : teachers){
-            if (t.getTeacherId().equals(teacherId))
-                System.out.println(t);
-        }
-    }*/
-    
-    //SHOW PROFITS
-    /*public static void showProfit(School school){
-        List<Course> courses = school.getCourseList();
-        double courseProfit = 0;
-        double total = 0;
-        for(Course c : courses){
-            courseProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
-            total += courseProfit;
-        }
-        System.out.println("Total profits of this school  are: " + total);
-    }*/
 }
