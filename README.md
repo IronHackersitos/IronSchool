@@ -1,11 +1,11 @@
 ## IronSchool 
 This project's main goal is to create a programme with a school class that can manage students, courses and teachers.
 
-#Main technologies used:
+##Main technologies used:
 - Java
 - Unit testing
 
-#Process
+##Process
 
 -Creation of a class map to determine main classes and properties with their main methods.
 -Writing code for the settled classes.
