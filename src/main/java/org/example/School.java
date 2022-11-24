@@ -3,12 +3,14 @@ package org.example;
 import java.util.List;
 
 public class School {
-    
+
     private String name;
     private int teacherNum;
     private int courseNum;
     private int studentNum;
-    private List<Course> courseList;
+    private List<Course> courses;
+    private List<Teacher> teachers;
+    private List<Student> students;
 
     public School(String name, int teacherNum, int courseNum, int studentNum) {
         setName(name);
@@ -16,7 +18,7 @@ public class School {
         setCourseNum(courseNum);
         setStudentNum(studentNum);
     }
-    
+
     //Setters
 
     public void setName(String name) {
@@ -35,12 +37,20 @@ public class School {
         this.studentNum = studentNum;
     }
 
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
+    public void setCourseList(List<Course> courses) {
+        this.courses = courses;
     }
-    
+
+    public void setTeacherList(List<Teacher> teachers) {
+        this.teachers = teachers;
+    }
+
+    public void setStudentList(List<Student> students) {
+        this.students = students;
+    }
+
     //Getters
-    
+
     public String getName() {
         return name;
     }
@@ -58,6 +68,124 @@ public class School {
     }
 
     public List<Course> getCourseList() {
-        return courseList;
+        return courses;
+    }
+
+    public List<Teacher> getTeacherList() {
+        return teachers;
+    }
+
+    public List<Student> getStudentList() {
+        return students;
+    }
+
+    public void enroll(String studentId, String courseId) {
+        Student student;
+        Course course;
+        for (Student s : students) {
+            if (s.getStudentId().equals(studentId)) {
+                student = s;
+                for (Course c : courses) {
+                    if (c.getCourseId().equals(courseId)) {
+                        course = c;
+                        course.getStudentList().add(student);
+                        course.setMoneyEarned(course.getMoneyEarned() + course.getPrice());
+                        System.out.println("This is the list of students enrolled in that course so far:");
+                        System.out.println(course.getStudentList().toString());
+                    } else System.err.println("There's no course with that name!!");
+                }
+            } else System.err.println("There's no student with that name!!");
+        }
+    }
+
+    public void assign(String teacherId, String courseId) {
+        Teacher teacher;
+        Course course;
+        for (Teacher t : teachers) {
+            if (t.getTeacherId().equals(teacherId)) {
+                teacher = t;
+                for (Course c : courses) {
+                    if (c.getCourseId().equals(courseId)) {
+                        course = c;
+                        course.setTeacher(teacher);
+                        System.out.println(course.getTeacher() + " has been added to this course: " + course.getName());
+                    } else System.err.println("There's no course with that name!!");
+                }
+            } else System.err.println("There's no teacher with that name!!");
+        }
+    }
+
+    public void showCourses() {
+        for (Course c : courses) {
+            System.out.println(c);
+        }
+    }
+
+    public void lookUpCourse(String courseId) {
+        for (Course c : courses) {
+            if (c.getCourseId().equals(courseId))
+                System.out.println(c);
+        }
+    }
+
+    public void showStudents() {
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+
+    public void lookUpStudent(String studentId) {
+        for (Student s : students) {
+            if (s.getStudentId().equals(studentId))
+                System.out.println(s);
+        }
+    }
+
+    public void showTeachers() {
+        for (Teacher t : teachers) {
+            System.out.println(t);
+        }
+    }
+
+    public void lookUpTeacher(String teacherId) {
+        for (Teacher t : teachers) {
+            if (t.getTeacherId().equals(teacherId))
+                System.out.println(t);
+        }
+    }
+
+    public void showProfit() {
+        double courseProfit = 0;
+        double total = 0;
+        for (Course c : courses) {
+            courseProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
+            total += courseProfit;
+        }
+        System.out.println(total + "euro");
+    }
+
+    //EXTRAS
+    public void showStudents(String courseId) {
+        for (Course c : courses) {
+            if (c.getCourseId().equals(courseId)) {
+                System.out.println(c.getStudentList().toString());
+            } else System.err.println("There's no course with that id!!");
+        }
+    }
+
+    public void showMoneyEarned() {
+        double total = 0;
+        for (Course c : courses) {
+            total += c.getMoneyEarned();
+        }
+        System.out.println(total + "euro");
+    }
+
+    public void showMoneySpent() {
+        double total = 0;
+        for (Course c : courses) {
+            total += c.getTeacher().getSalary();
+        }
+        System.out.println(total + "euro");
     }
 }

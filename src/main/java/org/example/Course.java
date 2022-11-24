@@ -1,6 +1,7 @@
 package org.example;
 
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Random;
 
 public class Course {
@@ -9,6 +10,8 @@ public class Course {
     private double price;
     private double moneyEarned;
     private Teacher teacher;
+
+    private List<Student> studentList;
 
     public Course(String name, double price, double moneyEarned, Teacher teacher) {
         //Generating random
@@ -19,6 +22,16 @@ public class Course {
         setPrice(price);
         setMoneyEarned(moneyEarned);
         setTeacher(teacher);
+    }
+
+    public Course(String name, double price, double moneyEarned) {
+        //Generating random
+        byte[] array = new byte[7];
+        new Random().nextBytes(array);
+        this.courseId = new String(array, Charset.forName("UTF-8"));
+        setName(name);
+        setPrice(price);
+        setMoneyEarned(moneyEarned);
     }
     
     //Setters
@@ -36,6 +49,10 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
     }
     
     //Getters
@@ -59,4 +76,23 @@ public class Course {
     public Teacher getTeacher() {
         return teacher;
     }
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+    
+    //TO STRING
+    
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId='" + courseId + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", moneyEarned=" + moneyEarned +
+                ", teacher=" + teacher +
+                ", studentList=" + studentList +
+                '}';
+    }
+    
 }
