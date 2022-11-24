@@ -41,9 +41,7 @@ public class Main {
             String courseName = saveString(input);
             System.out.println("What is the course price?");
             Double price = saveDouble(input);
-            System.out.println("What is the money earned with this course?");
-            Double moneyEarned = saveDouble(input);
-            Course course = new Course( courseName, price, moneyEarned);
+            Course course = new Course(courseName, price);
             courses.add(course);
             coursesNum--;
         }
@@ -62,7 +60,9 @@ public class Main {
             System.out.println("What is his/her email?");
             String studentEmail = saveString(input);
             Student student = new Student(studentName, studentAddress, studentEmail);
+            //System.out.println(student);
             students.add(student);
+            //System.out.println(students);
             studentNum--;
         }
 
@@ -93,16 +93,17 @@ public class Main {
                     System.out.println("To which course do you want to assign him/her?");
                     String courseId = saveString(input);
                     //enroll(studentId, courseId, students, courses);
+                    /*if(school.enroll(studentId, courseId) == -1){
+                        break;}
+                    break;*/
                     school.enroll(studentId, courseId);
-                    
-                    break;
                 case 2:
                     System.out.println("Which teacher do you want to assign?");
                     String teacherId = saveString(input);
                     System.out.println("To which course do you want to assign him/her?");
-                    String courseId = saveString(input);
+                    String courseId2 = saveString(input);
                     //assign(teacherId, courseId, teachers, courses);
-                    school.assign(teacherId, courseId);
+                    school.assign(teacherId, courseId2);
                     break;
                 case 3:
                     System.out.println("Here's a list with all the school's available courses");
@@ -111,10 +112,10 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Enter id of course you want to look up:");
-                    String courseId = saveString(input);
+                    String courseId3 = saveString(input);
                     System.out.println("Showing course details:");
                     //lookUpCourse(courseId);
-                    school.lookUpCourse(courseId);
+                    school.lookUpCourse(courseId3);
                     break;
                 case 5:
                     System.out.println("Here's a list with all the school's students");
@@ -123,10 +124,10 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Enter id of student you want to look up:");
-                    String studentId = saveString(input);
+                    String studentId1 = saveString(input);
                     System.out.println("Showing student details:");
                     //lookUpStudent(studentId);
-                    school.lookUpStudent(studentId);
+                    school.lookUpStudent(studentId1);
                     break;
                 case 7:
                     System.out.println("Here's a list with all the school's teachers");
@@ -135,10 +136,10 @@ public class Main {
                     break;
                 case 8:
                     System.out.println("Enter id of teacher you want to look up:");
-                    String teacherId = saveString(input);
+                    String teacherId1 = saveString(input);
                     System.out.println("Showing teacher details");
                     //lookUpTeacher(teacherId);
-                    school.lookUpTeacher(teacherId);
+                    school.lookUpTeacher(teacherId1);
                     break;
                 case 9:
                     System.out.println("Here's the amount of school's profits:");
@@ -147,9 +148,9 @@ public class Main {
                     break;
                 case 10:
                     System.out.println("Enter id of course whose students you want to see:");
-                    String courseId = saveString(input);
+                    String courseId4 = saveString(input);
                     System.out.println("Showing course students:");
-                    school.showStudents(courseId);
+                    school.showStudents(courseId4);
                     break;
                 case 11:
                     System.out.println("Here's the amount of school's money earned:");
@@ -168,9 +169,6 @@ public class Main {
                     
             }
         }
-        
-
-
     }
 
     //MENU

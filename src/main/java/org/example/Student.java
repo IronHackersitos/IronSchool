@@ -59,4 +59,14 @@ public class Student {
     public Course getCourse() {
         return course;
     }
+
+    @Override
+    public String toString() {
+        return "STUDENT:\n" +
+                "studentId: " + studentId + '\n' +
+                "name: " + name + '\n' +
+                "address: " + address + '\n' +
+                "email: " + email + '\n' +
+                "course: " + course + '\n' + "------------------\n";
+    }
 }

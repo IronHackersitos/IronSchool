@@ -40,4 +40,12 @@ public class Teacher {
     public double getSalary() {
         return salary;
     }
+
+    @Override
+    public String toString() {
+        return "TEACHER:\n" +
+                "teacherId: " + teacherId + '\n' +
+                "name: " + name + '\n' +
+                "salary: " + salary + '\n' + "------------------\n";
+    }
 }

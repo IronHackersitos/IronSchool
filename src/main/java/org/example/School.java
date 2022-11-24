@@ -83,32 +83,45 @@ public class School {
         Student student;
         Course course;
         for (Student s : students) {
+            System.out.println(s);
             if (s.getStudentId().equals(studentId)) {
+                //System.out.println("entro aqui");
                 student = s;
+                //System.out.println(student);
                 for (Course c : courses) {
+                   // System.out.println(c);
                     if (c.getCourseId().equals(courseId)) {
+                        //System.out.println("he encontrado un course");
                         course = c;
+                        //System.out.println(c);
                         course.getStudentList().add(student);
+                        //System.out.println(course.getStudentList());
                         course.setMoneyEarned(course.getMoneyEarned() + course.getPrice());
                         System.out.println("This is the list of students enrolled in that course so far:");
                         System.out.println(course.getStudentList().toString());
                     } else System.err.println("There's no course with that name!!");
                 }
-            } else System.err.println("There's no student with that name!!");
+            } else {
+                System.err.println("There's no student with that name!!");
+
+            }
         }
+
     }
 
     public void assign(String teacherId, String courseId) {
         Teacher teacher;
         Course course;
         for (Teacher t : teachers) {
+            //System.out.println(teachers);
+            //System.out.println(t);
             if (t.getTeacherId().equals(teacherId)) {
                 teacher = t;
                 for (Course c : courses) {
                     if (c.getCourseId().equals(courseId)) {
                         course = c;
                         course.setTeacher(teacher);
-                        System.out.println(course.getTeacher() + " has been added to this course: " + course.getName());
+                        System.out.println(course.getTeacher().getName() + " has been added to this course: " + course.getName());
                     } else System.err.println("There's no course with that name!!");
                 }
             } else System.err.println("There's no teacher with that name!!");
@@ -117,7 +130,7 @@ public class School {
 
     public void showCourses() {
         for (Course c : courses) {
-            System.out.println(c);
+            System.out.println(c.toString());
         }
     }
 
@@ -130,7 +143,7 @@ public class School {
 
     public void showStudents() {
         for (Student s : students) {
-            System.out.println(s);
+            System.out.println(s.toString());
         }
     }
 
@@ -158,8 +171,10 @@ public class School {
         double courseProfit = 0;
         double total = 0;
         for (Course c : courses) {
+            if(c.getTeacher() != null && c.getStudentList().isEmpty() == false){
             courseProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
-            total += courseProfit;
+            total += courseProfit;}
+            else System.out.println("You need to set students and teachers to the course to find the profit");
         }
         System.out.println(total + "euro");
     }
@@ -168,7 +183,7 @@ public class School {
     public void showStudents(String courseId) {
         for (Course c : courses) {
             if (c.getCourseId().equals(courseId)) {
-                System.out.println(c.getStudentList().toString());
+                System.out.println(c.getStudentList());
             } else System.err.println("There's no course with that id!!");
         }
     }
