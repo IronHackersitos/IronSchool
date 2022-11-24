@@ -1,4 +1,5 @@
 import org.example.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,34 +49,87 @@ public class SchoolTests {
         
         school = new School("escuelita", courses, teachers, students);
     }
+    
+    @AfterEach
+    void tearDown(){
+        school = null;
+    }
 
     @Test
-    void shouldCreateSchoolWithLists() {
+    void shouldCreateSchoolWithLists_OK() {
         
         assertEquals(3, school.getStudentList().size());
         assertEquals(3, school.getCourseList().size());
         assertEquals(3, school.getTeacherList().size());
     }
     @Test
-    void shouldEnrollStudentToCourse() {
+    void shouldEnrollStudentToCourse_OK() {
         school.enroll(student1.getStudentId(), school.getCourseList().get(0).getCourseId());
         assertEquals(1, school.getCourseList().get(0).getStudentList().size());
     }
     @Test
-    void shouldAssignTeacherToCourse() {
+    void shouldAssignTeacherToCourse_OK() {
         school.assign(teacher1.getTeacherId(), school.getCourseList().get(0).getCourseId());
         assertEquals("Paco", school.getCourseList().get(0).getTeacher().getName());
     }
     @Test
-    void shouldShowCourses() {
+    void shouldShowCourses_OK() {
         school.showCourses();
         assertEquals(courses, school.getCourseList());
     }
 
     @Test
-    void shouldShowCourses() {
-        school.showCourses();
-        assertEquals(courses, school.getCourseList());
+    void shouldLookUpCourse_OK() {
+        school.lookUpCourse(course1.getCourseId());
+        assertEquals(course1, school.lookUpCourse(course1.getCourseId()));
     }
-    
+
+    @Test
+    void shouldShowStudents_OK() {
+        school.showStudents();
+        assertEquals(students, school.getStudentList());
+    }
+
+    @Test
+    void shouldLookUpStudent_OK() {
+        school.lookUpStudent(student1.getStudentId());
+        assertEquals(student1, school.lookUpStudent(student1.getStudentId()));
+    }
+
+    @Test
+    void shouldShowTeachers_OK() {
+        school.showTeachers();
+        assertEquals(teachers, school.getTeacherList());
+    }
+
+    @Test
+    void shouldLookUpTeacher() {
+        school.lookUpTeacher(teacher1.getTeacherId());
+        assertEquals(teacher1, school.lookUpStudent(teacher1.getTeacherId()));
+    }
+
+    @Test
+    void shouldShowProfit(){
+        //money earned 300
+        school.enroll(student1.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        //moneyearned 600
+        school.enroll(student1.getStudentId(), school.getCourseList().get(1).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(1).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(1).getCourseId());
+        //moneyearned 900
+        school.enroll(student1.getStudentId(), school.getCourseList().get(2).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(2).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(2).getCourseId());
+        //expenses total 150
+        school.assign(teacher1.getTeacherId(), school.getCourseList().get(0).getCourseId());
+        school.assign(teacher2.getTeacherId(), school.getCourseList().get(1).getCourseId());
+        school.assign(teacher3.getTeacherId(), school.getCourseList().get(2).getCourseId());
+        
+        school.showProfit();
+        assertEquals(1650, school.showProfit());
+    }
+
+
 }
