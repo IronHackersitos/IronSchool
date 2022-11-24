@@ -1,4 +1,4 @@
-## IronSchool 
+### IronSchool 
 This project's main goal is to create a programme with a school class that can manage students, courses and teachers.
 
 # Main technologies used:
