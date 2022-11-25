@@ -57,55 +57,44 @@ public class School {
         Course course;
         //tenemos que ir a lo largo de la lista de estudiantes de la escuela para encontrar el estudiante y una vez encontrado hacemos lo mismo para buscar el curso dentro de la lista de cursos
         for (Student s : students) {
-            System.out.println("he entrado en el for para buscar al estudiante");
-            System.out.println(s.getStudentId());
-            System.out.println(studentId);
+            //System.out.println("he entrado en el for para buscar al estudiante");
+            //System.out.println(s.getStudentId());
+            //System.out.println(studentId);
             if (s.getStudentId().equals(studentId)) {
-                System.out.println("he encontrado al estudiante y es");
-                student = s;
-                System.out.println(student);
+                //System.out.println("he encontrado al estudiante y es");
+                //student = s;
+                //System.out.println(student);
                 for (Course c : courses) {
-                    System.out.println("he entrado en el for para buscar el curso");
-                   System.out.println(c);
+                    // System.out.println("he entrado en el for para buscar el curso");
+                    //System.out.println(c);
                     if (c.getCourseId().equals(courseId)) {
-                        System.out.println("he encontrado un course y es est");
-                        course = c;
-                        System.out.println(c);
-                        course.getStudentList().add(student);
-                        System.out.println("he añadido un estudiante a la lista de estudiantes del curso");
-                        System.out.println(course.getStudentList());
-                        course.setMoneyEarned(course.getMoneyEarned() + course.getPrice());
-                        System.out.println("This is the list of students enrolled in that course so far:");
-                        System.out.println(course.getStudentList().toString());
-                    } 
-                    else System.err.println("There's no course with that id!!");
+                        //System.out.println("he encontrado un course y es est");
+                        //course = c;
+                        //System.out.println(c);
+                        c.getStudentList().add(s);
+                        //System.out.println("he añadido un estudiante a la lista de estudiantes del curso");
+                        //System.out.println(course.getStudentList());
+                        c.setMoneyEarned(c.getMoneyEarned() + c.getPrice());
+                        //System.out.println("This is the list of students enrolled in that course so far:");
+                        //System.out.println(course.getStudentList().toString());
+                    }
                 }
-            } 
-            else {
-                System.err.println("There's no student with that id!!");
-
             }
         }
 
     }
 
     public void assign(String teacherId, String courseId) {
-        Teacher teacher;
-        Course course;
         for (Teacher t : teachers) {
-            //System.out.println(teachers);
-            //System.out.println(t);
             if (t.getTeacherId().equals(teacherId)) {
-                teacher = t;
                 for (Course c : courses) {
                     if (c.getCourseId().equals(courseId)) {
-                        course = c;
-                        course.setTeacher(teacher);
-                        System.out.println(course.getTeacher().getName() + " has been added to this course: " + course.getName());
-                    } else System.err.println("There's no course with that name!!");
+                        c.setTeacher(t);
+                    }
                 }
-            } else System.err.println("There's no teacher with that name!!");
+            }
         }
+
     }
 
     public List<Course> showCourses() {
@@ -145,17 +134,21 @@ public class School {
     }
 
     public double showProfit() {
-        double courseProfit = 0;
+        double schoolProfit = 0;
         double total = 0;
         for (Course c : courses) {
-            if(c.getTeacher() != null && c.getStudentList().isEmpty() == false){
-            courseProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
-            total += courseProfit;
+            if (c.getStudentList().isEmpty() == true) {
+                System.err.println("You need to set students to all courses");
+                return 0;
+            } else if (c.getTeacher() == null) {
+                System.err.println("You need to set a teacher to all courses");
+                return 0;
+            } else {
+                schoolProfit = c.getMoneyEarned() - c.getTeacher().getSalary();
+                total += schoolProfit;
             }
-            /*else System.out.println("You need to set students and teachers to the course to find the profit");*/
         }
         return total;
-        //System.out.println(total + "euro");
     }
 
     //EXTRAS
@@ -163,7 +156,7 @@ public class School {
         for (Course c : courses) {
             if (c.getCourseId().equals(courseId)) {
                 return c.getStudentList();
-            } //else System.err.println("There's no course with that id!!");
+            }
         }
         return null;
     }
@@ -171,19 +164,41 @@ public class School {
     public double showMoneyEarned() {
         double total = 0;
         for (Course c : courses) {
-            total += c.getMoneyEarned();
+            if(c.getMoneyEarned() == 0){
+                throw new NullPointerException();
+            }
+            else total += c.getMoneyEarned();
         }
-        //System.out.println(total + "euro");
         return total;
     }
 
     public double showMoneySpent() {
         double total = 0;
         for (Course c : courses) {
-            total += c.getTeacher().getSalary();
+            if(c.getTeacher() == null){
+                throw new NullPointerException();
+            }
+            else total += c.getTeacher().getSalary();
         }
-        //System.out.println(total + "euro");
         return total;
     }
-    
+
+    public void studentListToString() {
+        for (Student s : students) {
+            System.out.println(s.getName());
+        }
+    }
+
+    public void teacherListToString() {
+        for (Teacher t : teachers) {
+            System.out.println(t.getName());
+        }
+    }
+
+    public void courseListToString() {
+        for (Course c : courses) {
+            System.out.println(c.getName());
+        }
+    }
+
 }

@@ -60,9 +60,7 @@ public class Main {
             System.out.println("What is his/her email?");
             String studentEmail = saveString(input);
             Student student = new Student(studentName, studentAddress, studentEmail);
-            //System.out.println(student);
             students.add(student);
-            //System.out.println(students);
             studentNum--;
         }
 
@@ -87,24 +85,47 @@ public class Main {
                 case 1:
                     System.out.println("Which student do you want to enroll?");
                     String studentId = saveString(input);
+                    if(school.lookUpStudent(studentId) == null){
+                        System.err.println("That student doesn't exist yet");
+                        break;}
                     System.out.println("To which course do you want to assign him/her?");
                     String courseId = saveString(input);
+                    if(school.lookUpCourse(courseId) == null){
+                        System.err.println("That course doesn't exist yet.");
+                        break;
+                    }
                     school.enroll(studentId, courseId);
+                    System.out.println("Here is the list of students enrolled in this course so far:");
+                    school.lookUpCourse(courseId).studentListToString();
                     break;
                 case 2:
                     System.out.println("Which teacher do you want to assign?");
                     String teacherId = saveString(input);
+                    if(school.lookUpTeacher(teacherId) == null){
+                        System.err.println("That teacher doesn't exist yet");
+                        break;
+                    }
                     System.out.println("To which course do you want to assign him/her?");
                     String courseId2 = saveString(input);
+                    if(school.lookUpCourse(courseId2) == null){
+                        System.err.println("That course doesn't exist yet.");
+                        break;
+                    }
                     school.assign(teacherId, courseId2);
+                    System.out.println("Here is the course with the new teacher assigned:" + school.lookUpCourse(courseId2).toString());
                     break;
                 case 3:
                     System.out.println("Here's a list with all the school's available courses");
                     System.out.println(school.showCourses().toString());
+                    //school.courseListToString();
                     break;
                 case 4:
                     System.out.println("Enter id of course you want to look up:");
                     String courseId3 = saveString(input);
+                    if(school.lookUpCourse(courseId3) == null){
+                        System.err.println("That course doesn't exist yet.");
+                        break;
+                    }
                     System.out.println("Showing course details:");
                     System.out.println(school.lookUpCourse(courseId3).toString());
                     break;
@@ -115,6 +136,9 @@ public class Main {
                 case 6:
                     System.out.println("Enter id of student you want to look up:");
                     String studentId1 = saveString(input);
+                    if(school.lookUpStudent(studentId1) == null){
+                        System.err.println("That student doesn't exist yet");
+                        break;}
                     System.out.println("Showing student details:");
                     System.out.println(school.lookUpStudent(studentId1).toString());
                     break;
@@ -125,26 +149,42 @@ public class Main {
                 case 8:
                     System.out.println("Enter id of teacher you want to look up:");
                     String teacherId1 = saveString(input);
+                    if(school.lookUpTeacher(teacherId1) == null){
+                        System.err.println("That teacher doesn't exist yet");
+                        break;
+                    }
                     System.out.println("Showing teacher details");
                     System.out.println(school.lookUpTeacher(teacherId1).toString());
                     break;
                 case 9:
                     System.out.println("Here's the amount of school's profits:");
-                    System.out.println(school.showProfit());
+                    System.out.println(school.showProfit() + " euros");
                     break;
                 case 10:
                     System.out.println("Enter id of course whose students you want to see:");
                     String courseId4 = saveString(input);
+                    if(school.lookUpCourse(courseId4) == null){
+                        System.err.println("That course doesn't exist yet.");
+                        break;
+                    }
                     System.out.println("Showing course students:");
                     System.out.println(school.showStudents(courseId4).toString());
                     break;
                 case 11:
                     System.out.println("Here's the amount of school's money earned:");
-                    System.out.println(school.showMoneyEarned());
+                    try{
+                        System.out.println(school.showMoneyEarned() + " euros");
+                    }catch (NullPointerException e){
+                        System.err.println("You must assign students to all courses to see the total money earned");
+                    }
                     break;
                 case 12:
                     System.out.println("Here's the amount of school's money earned:");
-                    System.out.println(school.showMoneySpent());
+                    try {
+                        System.out.println(school.showMoneySpent() + " euros");
+                    }catch (NullPointerException e){
+                        System.err.println("You must assign teachers to all courses to see the total money spent");
+                    }
                     break;
                 case 13:
                     System.out.println("C ya!!!");

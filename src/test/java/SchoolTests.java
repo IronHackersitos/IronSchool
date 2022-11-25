@@ -103,13 +103,21 @@ public class SchoolTests {
     }
 
     @Test
-    void shouldLookUpTeacher() {
+    void shouldLookUpTeacher_OK() {
         school.lookUpTeacher(teacher1.getTeacherId());
-        assertEquals(teacher1, school.lookUpStudent(teacher1.getTeacherId()));
+        assertEquals(teacher1, school.lookUpTeacher(teacher1.getTeacherId()));
     }
 
     @Test
-    void shouldShowProfit(){
+    void shouldShowStudentsFromCourseId_OK() {
+        school.enroll(student1.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        assertEquals(course1.getStudentList(), school.showStudents(course1.getCourseId()));
+    }
+
+    @Test
+    void shouldShowProfit_OK(){
         //money earned 300
         school.enroll(student1.getStudentId(), school.getCourseList().get(0).getCourseId());
         school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
@@ -129,6 +137,36 @@ public class SchoolTests {
         
         school.showProfit();
         assertEquals(1650, school.showProfit());
+    }
+
+    @Test
+    void shouldShowMoneyEarned_OK(){
+        //money earned 300
+        school.enroll(student1.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(0).getCourseId());
+        //moneyearned 600
+        school.enroll(student1.getStudentId(), school.getCourseList().get(1).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(1).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(1).getCourseId());
+        //moneyearned 900
+        school.enroll(student1.getStudentId(), school.getCourseList().get(2).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(2).getCourseId());
+        school.enroll(student2.getStudentId(), school.getCourseList().get(2).getCourseId());
+        
+        school.showMoneyEarned();
+        assertEquals(1800, school.showMoneyEarned());
+    }
+
+    @Test
+    void shouldShowMoneySpent_OK(){
+        //expenses total 150
+        school.assign(teacher1.getTeacherId(), school.getCourseList().get(0).getCourseId());
+        school.assign(teacher2.getTeacherId(), school.getCourseList().get(1).getCourseId());
+        school.assign(teacher3.getTeacherId(), school.getCourseList().get(2).getCourseId());
+
+        school.showMoneySpent();
+        assertEquals(150, school.showMoneySpent());
     }
 
 

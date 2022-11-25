@@ -116,5 +116,10 @@ public class Course {
                 "teacher: " + teacher + '\n' +
                 "studentList: " + studentList + '\n' + "------------------\n";
     }
-
+    
+    public void studentListToString(){
+        for(Student s : studentList){
+            System.out.println(s.getName());
+        }
+    }
 }
